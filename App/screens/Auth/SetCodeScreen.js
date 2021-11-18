@@ -1,5 +1,6 @@
+/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,6 +11,8 @@ import {
   Image,
   Platform,
 } from 'react-native';
+import StateContext from '../../StateContext';
+import DispatchContext from '../../DispatchContext';
 
 import axios from 'axios';
 import {
@@ -22,6 +25,29 @@ import {
 } from '../../config/globalStyles';
 
 function SetCodeScreen({navigation}) {
+  const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+  const [valid, setValid] = useState(false);
+  const [code, setCode] = useState('');
+  const saveCode = event => {
+    setCode(event);
+  };
+  const registerCode = () => {
+    if (code === appState.userCode) {
+      setValid(true);
+    } else {
+      alert('인증코드가 잘못되었습니다. 다시 한 번 확인해주세요');
+    }
+  };
+
+  const goToProfilePage = async () => {
+    navigation.navigate('SetUserScreen', {});
+    appDispatch({
+      type: 'setUserIdx',
+      user: code,
+    });
+  };
+
   return (
     <SafeAreaView style={[styles.container]}>
       <View style={styles.titleSection}>
@@ -36,6 +62,7 @@ function SetCodeScreen({navigation}) {
           입력해주세요
         </Text>
         <TextInput
+          onChangeText={saveCode}
           style={styles.loginInput}
           // onChangeText={onChangeNumber}
           // value={number}
@@ -43,21 +70,24 @@ function SetCodeScreen({navigation}) {
           keyboardType="numeric"
         />
 
-        <TouchableOpacity style={styles.accessButton}>
+        <TouchableOpacity
+          onPress={() => {
+            registerCode();
+          }}
+          style={styles.accessButton}>
           <Text style={{color: colors.white}}>인증하기</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={styles.bottomSection}
-        onPress={() => {
-          navigation.navigate('SetUserScreen', {
-            // content: content,
-            // noteTitle: route.params.title,
-          });
-        }}>
-        <Text style={styles.bottomText}>프로필 설정 </Text>
-      </TouchableOpacity>
+      {valid && (
+        <TouchableOpacity
+          style={styles.bottomSection}
+          onPress={() => {
+            goToProfilePage();
+          }}>
+          <Text style={styles.bottomText}>인증완료! 프로필 설정하기 </Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }
@@ -77,7 +107,7 @@ const styles = StyleSheet.create({
     marginLeft: width * 30,
   },
   contentSection: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',

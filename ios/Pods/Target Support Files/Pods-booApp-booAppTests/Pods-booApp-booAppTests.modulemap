@@ -1,0 +1,6 @@
+module Pods_booApp_booAppTests {
+  umbrella header "Pods-booApp-booAppTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

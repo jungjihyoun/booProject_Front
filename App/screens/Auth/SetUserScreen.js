@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
   View,
@@ -11,6 +11,9 @@ import {
   Platform,
   Button,
 } from 'react-native';
+
+import StateContext from '../../StateContext';
+import DispatchContext from '../../DispatchContext';
 
 import axios from 'axios';
 import {
@@ -24,7 +27,10 @@ import {
 import DatePicker from 'react-native-date-picker';
 
 const SetUserScreen = ({navigation}) => {
+  const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
   const [date, setDate] = useState(new Date());
+
   return (
     <SafeAreaView style={[styles.container]}>
       <View style={styles.titleSection}>
@@ -43,8 +49,22 @@ const SetUserScreen = ({navigation}) => {
           keyboardType="numeric"
         />
 
-        <Text style={styles.contentText}>생일을 입력해주세요[선택]</Text>
-        <DatePicker date={date} onDateChange={setDate} mode="date" />
+        <Text style={styles.contentText}>비밀번호를 설정해주세요[필수]</Text>
+        <TextInput
+          style={styles.loginInput}
+          // onChangeText={onChangeNumber}
+          // value={number}
+          placeholder="대소문자,숫자 포함 6글자 이상"
+          keyboardType="numeric"
+        />
+
+        <Text style={styles.contentText}>생년월일을 입력해주세요[선택]</Text>
+        <DatePicker
+          style={{height: 120}}
+          date={date}
+          onDateChange={setDate}
+          mode="date"
+        />
       </View>
 
       <TouchableOpacity
@@ -107,7 +127,7 @@ const styles = StyleSheet.create({
     // marginTop: 4,
   },
   contentText: {
-    fontSize: fontSizes.md,
+    fontSize: fontSizes.sm,
     fontWeight: fontWeight.bold,
     color: colors.black,
     marginBottom: 10,

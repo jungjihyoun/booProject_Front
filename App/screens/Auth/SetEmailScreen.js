@@ -1,5 +1,6 @@
+/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,6 +11,8 @@ import {
   Image,
   Platform,
 } from 'react-native';
+import StateContext from '../../StateContext';
+import DispatchContext from '../../DispatchContext';
 
 import axios from 'axios';
 import {
@@ -22,6 +25,46 @@ import {
 } from '../../config/globalStyles';
 
 function SetEmailScreen({navigation}) {
+  const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+  const [text, setText] = useState('');
+
+  const saveText = event => {
+    setText(event);
+  };
+
+  const goToCodePage = async () => {
+    appDispatch({
+      type: 'setEmail',
+      userEmail: text,
+    });
+    // 이메일 중복 체크
+    await axios
+      .post('http://localhost:8080/auth/checkEmail', {
+        userEmail: text,
+      })
+      .then(function (response) {
+        if (!response.data.tf) {
+          alert('중복된 이메일 입니다');
+        } else {
+          // 인증코드 메일 보내기
+          axios
+            .post('http://localhost:8080/auth/emailAuth', {
+              userEmail: text,
+            })
+            .then(function (res) {
+              // 인증번호 받고 클라이언트 측에 저장
+              console.log(res.data);
+              appDispatch({
+                type: 'setCode',
+                userCode: res.data,
+              });
+            });
+          navigation.navigate('SetCodeScreen', {});
+        }
+      });
+  };
+
   return (
     <SafeAreaView style={[styles.container]}>
       <View style={styles.titleSection}>
@@ -36,8 +79,7 @@ function SetEmailScreen({navigation}) {
         </Text>
         <TextInput
           style={styles.loginInput}
-          // onChangeText={onChangeNumber}
-          // value={number}
+          onChangeText={saveText}
           placeholder="이메일"
           keyboardType="numeric"
         />
@@ -46,12 +88,11 @@ function SetEmailScreen({navigation}) {
       <TouchableOpacity
         style={styles.bottomSection}
         onPress={() => {
-          navigation.navigate('SetCodeScreen', {
-            // content: content,
-            // noteTitle: route.params.title,
-          });
+          goToCodePage();
         }}>
-        <Text style={styles.bottomText}>인증번호 받으러가기 </Text>
+        {text.includes('@') && (
+          <Text style={styles.bottomText}>인증번호 받으러가기 </Text>
+        )}
       </TouchableOpacity>
     </SafeAreaView>
   );

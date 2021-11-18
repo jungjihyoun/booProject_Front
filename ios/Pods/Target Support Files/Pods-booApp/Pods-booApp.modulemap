@@ -1,0 +1,6 @@
+module Pods_booApp {
+  umbrella header "Pods-booApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
