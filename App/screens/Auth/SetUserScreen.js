@@ -29,22 +29,41 @@ import DatePicker from 'react-native-date-picker';
 const SetUserScreen = ({navigation}) => {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState(new Date());
+
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [birth, setBirth] = useState(new Date());
+
+  const setUserBirth = e => {
+    appDispatch({
+      type: 'setEmail',
+      userEmail: birth,
+    });
+    setBirth(e);
+  };
+  const saveText = (type, event) => {
+    if (type === 'userName') {
+      setUserName(event);
+    } else {
+      setPassword(event);
+    }
+  };
 
   return (
     <SafeAreaView style={[styles.container]}>
       <View style={styles.titleSection}>
         <Text style={styles.mainLogoText}>BooFinder </Text>
         <Text style={styles.signUpTitle}>프로필 설정</Text>
-        {/* <Image style={styles.logoImage} source={images.puzzle} /> */}
       </View>
 
       <View style={styles.contentSection}>
         <Text style={styles.contentText}>닉네임을 입력해 주세요[필수]</Text>
         <TextInput
           style={styles.loginInput}
-          // onChangeText={onChangeNumber}
-          // value={number}
+          onChangeText={e => {
+            saveText('userName', e);
+          }}
           placeholder="이름"
           keyboardType="numeric"
         />
@@ -52,17 +71,20 @@ const SetUserScreen = ({navigation}) => {
         <Text style={styles.contentText}>비밀번호를 설정해주세요[필수]</Text>
         <TextInput
           style={styles.loginInput}
-          // onChangeText={onChangeNumber}
-          // value={number}
+          onChangeText={e => {
+            saveText('password', e);
+          }}
           placeholder="대소문자,숫자 포함 6글자 이상"
           keyboardType="numeric"
         />
 
         <Text style={styles.contentText}>생년월일을 입력해주세요[선택]</Text>
         <DatePicker
-          style={{height: 120}}
-          date={date}
-          onDateChange={setDate}
+          style={{height: 100}}
+          date={birth}
+          onDateChange={date => {
+            setUserBirth(date);
+          }}
           mode="date"
         />
       </View>
@@ -70,10 +92,22 @@ const SetUserScreen = ({navigation}) => {
       <TouchableOpacity
         style={styles.bottomSection}
         onPress={() => {
-          navigation.navigate('SetUserScreen', {
-            // content: content,
-            // noteTitle: route.params.title,
+          appDispatch({
+            type: 'setName',
+            userName: userName,
           });
+          appDispatch({
+            type: 'setPassword',
+            userPassword: password,
+          });
+          appDispatch({
+            type: 'setBirth',
+            userBirth: birth.toDateString(),
+          });
+          // navigation.navigate('DashBoardScreen', {
+          //   // content: content,
+          //   // noteTitle: route.params.title,
+          // });
         }}>
         <Text style={styles.bottomText}>홈화면으로</Text>
       </TouchableOpacity>
@@ -139,12 +173,12 @@ const styles = StyleSheet.create({
   },
   loginInput: {
     width: width * 343,
-    height: height * 38,
+    height: height * 30,
     borderBottomWidth: 1,
     borderStyle: 'solid',
     borderColor: colors.darkGrey,
     color: colors.darkGrey,
-    fontSize: fontSizes.lg,
+    fontSize: fontSizes.sm,
     marginBottom: height * 50,
   },
 });

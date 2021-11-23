@@ -57,7 +57,7 @@ function SetEmailScreen({navigation}) {
               console.log(res.data);
               appDispatch({
                 type: 'setCode',
-                userCode: res.data,
+                userID: res.data,
               });
             });
           navigation.navigate('SetCodeScreen', {});

@@ -2,6 +2,7 @@ import {Dimensions} from 'react-native';
 
 export const colors = {
   primary: '#8CB3FF',
+  primaryB: '#FA9B86',
   black: '#191919',
   white: '#ffffff',
 
@@ -41,6 +42,7 @@ export const fontWeight = {
 };
 
 export const images = {
+  ji: require('../assets/ji.jpg'),
   hello: require('../assets/waving-hand.png'),
   puzzle: require('../assets/puzzle.png'),
 };

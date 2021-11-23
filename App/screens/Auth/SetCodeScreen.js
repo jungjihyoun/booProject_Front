@@ -33,7 +33,7 @@ function SetCodeScreen({navigation}) {
     setCode(event);
   };
   const registerCode = () => {
-    if (code === appState.userCode) {
+    if (code === appState.userID) {
       setValid(true);
     } else {
       alert('인증코드가 잘못되었습니다. 다시 한 번 확인해주세요');
