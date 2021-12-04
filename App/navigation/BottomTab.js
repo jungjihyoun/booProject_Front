@@ -4,8 +4,6 @@ import {Image} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import HomeStack from './HomeStack';
-// import ProfileStack from './ProfileStack';
-
 //custom imports
 
 const Tab = createBottomTabNavigator();
@@ -14,10 +12,10 @@ const Tab = createBottomTabNavigator();
 //   let iconImagePath;
 //   let iconSize;
 
-//   if (name === 'Home') {
+//   if (name === '홈') {
 //     iconSize = {width: width * 22.4, height: height * 22};
 //     iconImagePath = images.home;
-//   } else if (name === 'Dream') {
+//   } else if (name === '목표설정') {
 //     iconSize = {width: width * 18, height: height * 18};
 //     iconImagePath = images.dream;
 //   } else {
@@ -31,17 +29,8 @@ const Tab = createBottomTabNavigator();
 export default function BottomTabNavigator({navigation, route}) {
   //탭 네비게이터 함수
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={({route}) => ({
-        // activeTintColor: colors.primary,
-        tabBarLabel: route.name,
-        // tabBarIcon: ({focused}) => TabBarIcon(focused, route.name),
-        headerShown: false,
-      })}>
-      <Tab.Screen name="Home" component={HomeStack} />
-      {/* <Tab.Screen name="Dream" component={DreamStack} />
-      <Tab.Screen name="Profile" component={ProfileStack} /> */}
+    <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen name="홈" component={HomeStack} />
     </Tab.Navigator>
   );
 }

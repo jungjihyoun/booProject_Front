@@ -2,11 +2,12 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
 import {fontSizes, fontWeight, height, width} from '../config/globalStyles';
 
-function BooText({color, textAlign, ...props}) {
+function BooText({color, textAlign, style, type, ...props}) {
   return (
     <Text
       style={{
-        ...styles[props.style],
+        ...styles[type],
+        ...style,
         color: color,
         textAlign: textAlign,
       }}>
@@ -16,7 +17,6 @@ function BooText({color, textAlign, ...props}) {
 }
 
 const styles = StyleSheet.create({
-  // Title
   header: {
     fontSize: fontSizes.xl,
   },

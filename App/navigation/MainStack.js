@@ -1,10 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-//navigation
-
-//screens
-
 import BottomTabNavigator from './BottomTab';
 import DepthStack from './DepthStack';
 

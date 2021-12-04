@@ -10,9 +10,13 @@ import {
   StyleSheet,
   Image,
   Platform,
+  Alert,
 } from 'react-native';
-import StateContext from '../../StateContext';
-import DispatchContext from '../../DispatchContext';
+import {
+  useUsersState,
+  useUsersDispatch,
+  fetchSubcharacter,
+} from '../../userReducer';
 
 import axios from 'axios';
 import {
@@ -25,8 +29,8 @@ import {
 } from '../../config/globalStyles';
 
 function SetEmailScreen({navigation}) {
-  const appState = useContext(StateContext);
-  const appDispatch = useContext(DispatchContext);
+  const state = useUsersState();
+  const dispatch = useUsersDispatch();
   const [text, setText] = useState('');
 
   const saveText = event => {
@@ -34,7 +38,7 @@ function SetEmailScreen({navigation}) {
   };
 
   const goToCodePage = async () => {
-    appDispatch({
+    dispatch({
       type: 'setEmail',
       userEmail: text,
     });
@@ -45,7 +49,7 @@ function SetEmailScreen({navigation}) {
       })
       .then(function (response) {
         if (!response.data.tf) {
-          alert('중복된 이메일 입니다');
+          Alert.alert('부파인더', '중복된 이메일 입니다', [{text: '확인'}]);
         } else {
           // 인증코드 메일 보내기
           axios
@@ -55,7 +59,7 @@ function SetEmailScreen({navigation}) {
             .then(function (res) {
               // 인증번호 받고 클라이언트 측에 저장
               console.log(res.data);
-              appDispatch({
+              dispatch({
                 type: 'setCode',
                 userID: res.data,
               });

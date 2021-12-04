@@ -11,8 +11,11 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import StateContext from '../../StateContext';
-import DispatchContext from '../../DispatchContext';
+import {
+  useUsersState,
+  useUsersDispatch,
+  fetchSubcharacter,
+} from '../../userReducer';
 
 import axios from 'axios';
 import {
@@ -25,15 +28,15 @@ import {
 } from '../../config/globalStyles';
 
 function SetCodeScreen({navigation}) {
-  const appState = useContext(StateContext);
-  const appDispatch = useContext(DispatchContext);
+  const state = useUsersState();
+  const dispatch = useUsersDispatch();
   const [valid, setValid] = useState(false);
   const [code, setCode] = useState('');
   const saveCode = event => {
     setCode(event);
   };
   const registerCode = () => {
-    if (code === appState.userID) {
+    if (code === state.userID) {
       setValid(true);
     } else {
       alert('인증코드가 잘못되었습니다. 다시 한 번 확인해주세요');
@@ -42,9 +45,9 @@ function SetCodeScreen({navigation}) {
 
   const goToProfilePage = async () => {
     navigation.navigate('SetUserScreen', {});
-    appDispatch({
-      type: 'setUserIdx',
-      user: code,
+    dispatch({
+      type: 'setCode',
+      userID: code,
     });
   };
 

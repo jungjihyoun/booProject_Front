@@ -12,7 +12,7 @@ const initialState = {
   todayDate: new Date().toDateString(),
   userName: '',
   userEmail: '',
-  userID: '12345',
+  userID: 'ecg2sd',
   userBirth: new Date(),
   userPassword: '',
   subcharacter: [], //subcharacter 정보 담는 변수
@@ -42,7 +42,7 @@ function usersReducer(draft, action) {
       break;
     case 'fetchSubcharacter':
       draft.subcharacter = action.subcharacter;
-      console.log('fetchsubcharacter reducer', draft.subcharacter);
+      console.log('fetch subcharacter reducer', action);
       break;
     default:
       break;
@@ -67,16 +67,16 @@ export function UsersProvider({children}) {
 // State 를 쉽게 조회 할 수 있게 해주는 커스텀 Hook
 export function useUsersState() {
   const state = useContext(StateContext);
-  // if (!state) {
-  //   throw new Error('Cannot find UsersState');
-  // }
+  if (!state) {
+    throw new Error('Cannot find state');
+  }
   return state;
 }
 // Dispatch 를 쉽게 사용 할 수 있게 해주는 커스텀 Hook
 export function useUsersDispatch() {
   const dispatch = useContext(DispatchContext);
   if (!dispatch) {
-    throw new Error('Cannot find UsersProvider');
+    throw new Error('Cannot find provider');
   }
   return dispatch;
 }
@@ -84,11 +84,12 @@ export function useUsersDispatch() {
 // API Subcharacter fetch
 export const fetchSubcharacter = async (dispatch, userID) => {
   await axios
-    .get(`http://localhost:8080/dashBoard/subcharacter/${userID}`)
+    .get(`http://localhost:8080/subcharacter/${userID}`)
     .then(response => {
       dispatch({type: 'fetchSubcharacter', subcharacter: response.data});
     })
     .catch(error => {
-      console.log(error);
+      console.log('부캐릭터 패치에 실패하였습니다');
+      console.warn(error);
     });
 };

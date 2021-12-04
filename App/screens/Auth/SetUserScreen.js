@@ -12,8 +12,11 @@ import {
   Button,
 } from 'react-native';
 
-import StateContext from '../../StateContext';
-import DispatchContext from '../../DispatchContext';
+import {
+  useUsersState,
+  useUsersDispatch,
+  fetchSubcharacter,
+} from '../../userReducer';
 
 import axios from 'axios';
 import {
@@ -27,8 +30,8 @@ import {
 import DatePicker from 'react-native-date-picker';
 
 const SetUserScreen = ({navigation}) => {
-  const appState = useContext(StateContext);
-  const appDispatch = useContext(DispatchContext);
+  const state = useUsersState();
+  const dispatch = useUsersDispatch();
   // const [date, setDate] = useState(new Date());
 
   const [userName, setUserName] = useState('');
@@ -36,7 +39,7 @@ const SetUserScreen = ({navigation}) => {
   const [birth, setBirth] = useState(new Date());
 
   const setUserBirth = e => {
-    appDispatch({
+    dispatch({
       type: 'setEmail',
       userEmail: birth,
     });
@@ -91,23 +94,34 @@ const SetUserScreen = ({navigation}) => {
 
       <TouchableOpacity
         style={styles.bottomSection}
-        onPress={() => {
-          appDispatch({
+        onPress={async () => {
+          dispatch({
             type: 'setName',
             userName: userName,
           });
-          appDispatch({
+          dispatch({
             type: 'setPassword',
             userPassword: password,
           });
-          appDispatch({
+          dispatch({
             type: 'setBirth',
             userBirth: birth.toDateString(),
           });
-          // navigation.navigate('DashBoardScreen', {
-          //   // content: content,
-          //   // noteTitle: route.params.title,
-          // });
+          navigation.navigate('DashBoardScreen', {
+            // content: content,
+            // noteTitle: route.params.title,
+          });
+          await axios
+            .post('http://localhost:8080/setUser', {
+              user_id: '12345',
+              password: 'wlgus',
+              username: 'jihyoun',
+              birthday: '1998-06-02',
+              email: 'jihyoun0602@khu.ac.kr',
+            })
+            .then(function (response) {
+              console.log(response);
+            });
         }}>
         <Text style={styles.bottomText}>홈화면으로</Text>
       </TouchableOpacity>

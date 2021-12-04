@@ -16,17 +16,17 @@ import {BooText} from '../../../component/BooText';
 
 function BooCharacterCard({image, ...props}) {
   return (
-    <TouchableOpacity style={{flex: 1, marginBottom: 20}}>
+    <TouchableOpacity style={{flex: 1, marginHorizontal: 10}}>
       <BooCard
-        w={370}
-        h={280}
+        w={150}
+        h={150}
         positionX="center"
         positionY="flex-start"
-        backgroundColor={colors.white}>
+        backgroundColor={colors.lightGrey}>
         <Image
           style={{
-            width: width * 370,
-            height: height * 210,
+            width: width * 150,
+            height: height * 100,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
           }}
@@ -34,7 +34,7 @@ function BooCharacterCard({image, ...props}) {
         />
         <View
           style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
-          <BooText style="subtitle" textAlign="center" color={colors.black}>
+          <BooText type="subtitle" textAlign="center" color={colors.black}>
             {props.children}
           </BooText>
         </View>

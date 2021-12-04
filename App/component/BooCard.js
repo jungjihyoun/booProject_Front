@@ -23,6 +23,7 @@ function BooCard({
   return (
     <SafeAreaView>
       <TouchableOpacity
+        onPress={() => onPress()}
         style={{
           ...styles.card,
           width: width * w,

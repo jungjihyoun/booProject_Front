@@ -12,12 +12,8 @@ export const colors = {
   textGrey: '#5F6768',
 
   darkGrey: '#7D7D7D',
+  mediumGrey: '#C9C9C9',
   lightGrey: '#EEEEEE',
-};
-
-export const storyBoardDimensions = {
-  height: 835,
-  width: 397,
 };
 
 export const fontSizes = {
@@ -47,12 +43,6 @@ export const images = {
   puzzle: require('../assets/puzzle.png'),
 };
 
-export const height = (
-  Dimensions.get('screen').height *
-  (1 / storyBoardDimensions.height)
-).toFixed(2);
+export const height = (Dimensions.get('screen').height * (1 / 835)).toFixed(2);
 
-export const width = (
-  Dimensions.get('screen').width *
-  (1 / storyBoardDimensions.width)
-).toFixed(2);
+export const width = (Dimensions.get('screen').width * (1 / 395)).toFixed(2);
