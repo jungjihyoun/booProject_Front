@@ -82,14 +82,14 @@ export function useUsersDispatch() {
 }
 
 // API Subcharacter fetch
-export const fetchSubcharacter = async (dispatch, userID) => {
-  await axios
+export const fetchSubcharacter = (dispatch, userID) => {
+  axios
     .get(`http://localhost:8080/subcharacter/${userID}`)
     .then(response => {
       dispatch({type: 'fetchSubcharacter', subcharacter: response.data});
     })
     .catch(error => {
       console.log('부캐릭터 패치에 실패하였습니다');
-      console.warn(error);
+      // console.warn(error);
     });
 };

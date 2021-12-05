@@ -1,15 +1,21 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-
-const WriteStack = createStackNavigator();
+import WritingScreen from '../screens/Write/WritingScreen';
+const StackWrite = createStackNavigator();
 const navOptionHandler = () => ({
   headerShown: false,
 });
 //메인 화면 스택
-const StackWrite = ({navigation, route}) => {
+const WriteStack = ({navigation, route}) => {
   return (
-    <WriteStack.Navigator initialRouteName="WirteScreen"></WriteStack.Navigator>
+    <StackWrite.Navigator>
+      <StackWrite.Screen
+        name="WritingScreen"
+        component={WritingScreen}
+        options={navOptionHandler}
+      />
+    </StackWrite.Navigator>
   );
 };
 
-export default StackWrite;
+export default WriteStack;

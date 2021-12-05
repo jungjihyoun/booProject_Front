@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.booapp">
+  package="com.booproject_fe">
 
     <uses-permission android:name="android.permission.INTERNET" />
 

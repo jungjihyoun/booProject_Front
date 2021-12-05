@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import SubCharacterScreen from '../screens/CharacterPage/CharacterScreen';
+import BooFindScreen from '../screens/CharacterPage/BooFindScreen';
 
 const StackBooFind = createStackNavigator();
 const navOptionHandler = () => ({
@@ -11,8 +11,8 @@ const BooFindStack = ({navigation, route}) => {
   return (
     <StackBooFind.Navigator initialRouteName="BooFindScreen">
       <StackBooFind.Screen
-        name="SubCharacterScreen"
-        component={SubCharacterScreen}
+        name="BooFindScreen"
+        component={BooFindScreen}
         options={navOptionHandler}
       />
     </StackBooFind.Navigator>
