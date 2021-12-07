@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   SafeAreaView,
@@ -18,20 +19,22 @@ function BooCard({
   padding,
   backgroundColor,
   onPress,
+  style,
   ...props
 }) {
   return (
     <SafeAreaView>
       <TouchableOpacity
-        onPress={() => onPress()}
+        onPress={onPress}
         style={{
-          ...styles.card,
+          ...style,
           width: width * w,
           height: height * h,
           backgroundColor: backgroundColor,
           justifyContent: positionY,
           alignItems: positionX,
           padding: padding,
+          borderRadius: props.borderRadius ? props.borderRadius : 10,
         }}>
         {props.children}
       </TouchableOpacity>
@@ -39,10 +42,10 @@ function BooCard({
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    borderRadius: 10,
-  },
-});
+// const styles = StyleSheet.create({
+//   card: {
+//     borderRadius: 10,
+//   },
+// });
 
 export {BooCard};

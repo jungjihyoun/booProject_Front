@@ -12,7 +12,7 @@ const initialState = {
   todayDate: new Date().toDateString(),
   userName: '',
   userEmail: '',
-  userID: 'ecg2sd',
+  userID: 'da51ef',
   userBirth: new Date(),
   userPassword: '',
   subcharacter: [], //subcharacter 정보 담는 변수
@@ -30,11 +30,11 @@ function usersReducer(draft, action) {
       break;
     case 'setCode':
       draft.userID = action.userID;
-      console.log('reducerTest', draft.userID);
+      console.log('code from DB', draft.userID);
       break;
     case 'setBirth':
       draft.userBirth = action.userBirth;
-      console.log('userBirth', draft.userBirth);
+      console.log('reducerUserBirth', draft.userBirth);
       break;
     case 'setPassword':
       draft.userPassword = action.userPassword;
@@ -84,7 +84,7 @@ export function useUsersDispatch() {
 // API Subcharacter fetch
 export const fetchSubcharacter = (dispatch, userID) => {
   axios
-    .get(`http://localhost:8080/subcharacter/${userID}`)
+    .get(`http://localhost:8080/subCharacter/${userID}`)
     .then(response => {
       dispatch({type: 'fetchSubcharacter', subcharacter: response.data});
     })

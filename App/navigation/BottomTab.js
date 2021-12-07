@@ -23,7 +23,7 @@ const TabBarIcon = (focused, name) => {
     case '글쓰기':
       iconImagePath = images.write;
       break;
-    case '부캐찾기':
+    case '둘러보기':
       iconImagePath = images.searchBoo;
       break;
     default:
@@ -56,7 +56,7 @@ export default function BottomTabNavigator() {
       })}>
       <Tab.Screen name="홈" component={HomeStack} />
       <Tab.Screen name="글쓰기" component={WriteStack} />
-      <Tab.Screen name="부캐찾기" component={BooFindStack} />
+      <Tab.Screen name="둘러보기" component={BooFindStack} />
       <Tab.Screen name="프로필" component={ProfileStack} />
     </Tab.Navigator>
   );

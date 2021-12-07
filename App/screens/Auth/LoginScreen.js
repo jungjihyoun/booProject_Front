@@ -10,8 +10,6 @@ import {
   Image,
   Platform,
 } from 'react-native';
-
-import axios from 'axios';
 import {
   height,
   width,
@@ -19,8 +17,18 @@ import {
   fontSizes,
   fontWeight,
 } from '../../config/globalStyles';
+import {
+  useUsersState,
+  useUsersDispatch,
+  fetchSubcharacter,
+} from '../../userReducer';
+import API from '../../utils/auth';
 
 function LoginScreen({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useUsersDispatch();
+
   return (
     <SafeAreaView style={[styles.container]}>
       <View style={styles.appTitleArea}>
@@ -30,18 +38,20 @@ function LoginScreen({navigation}) {
       <View style={{flex: 1}}>
         <TextInput
           style={styles.loginInput}
-          // onChangeText={onChangeNumber}
-          // value={number}
+          onChangeText={e => {
+            setEmail(e);
+          }}
+          value={email}
           placeholder="아이디"
-          keyboardType="numeric"
         />
 
         <TextInput
           style={styles.loginInput}
-          // onChangeText={onChangeNumber}
-          // value={number}
+          onChangeText={e => {
+            setPassword(e);
+          }}
+          value={password}
           placeholder="비밀번호"
-          keyboardType="numeric"
         />
       </View>
 
@@ -49,6 +59,22 @@ function LoginScreen({navigation}) {
         <TouchableOpacity
           style={styles.loginButton}
           onPress={async () => {
+            // await dispatch({
+            //   type: 'setEmail',
+            //   userEmail: email,
+            // });
+
+            // await dispatch({
+            //   type: 'setPassword',
+            //   userEmail: password,
+            // });
+
+            // await API.login(
+            //   email,
+            //   password,
+            //   navigation.navigate('HomeApp'),
+            //   dispatch,
+            // );
             navigation.navigate('HomeApp');
           }}>
           <Text style={{color: colors.white}}>로그인</Text>
@@ -61,7 +87,13 @@ function LoginScreen({navigation}) {
           flexDirection: 'row',
         }}>
         <Text style={styles.aboutSignUp}>아이디/비밀번호 찾기</Text>
-        <Text style={styles.aboutSignUp}>회원가입</Text>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('SetEmailScreen');
+          }}>
+          <Text style={styles.aboutSignUp}>회원가입</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

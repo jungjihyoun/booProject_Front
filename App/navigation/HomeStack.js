@@ -2,6 +2,8 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import DashBoardScreen from '../screens/Home/DashBoardScreen';
+import BooEnrollScreen from '../screens/Home/BooEnrollScreen';
+import RecordScreen from '../screens/Home/RecordScreen';
 
 const StackHome = createStackNavigator();
 
@@ -17,6 +19,16 @@ const HomeStack = ({navigation, route}) => {
       <StackHome.Screen
         name="DashBoardScreen"
         component={DashBoardScreen}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
+        name="BooEnrollScreen"
+        component={BooEnrollScreen}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
+        name="RecordScreen"
+        component={RecordScreen}
         options={navOptionHandler}
       />
     </StackHome.Navigator>

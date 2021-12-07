@@ -14,15 +14,16 @@ import {height, width, colors} from '../../../config/globalStyles';
 import {BooCard} from '../../../component/BooCard';
 import {BooText} from '../../../component/BooText';
 
-function BooCharacterCard({image, ...props}) {
+function BooCharacterCard({image, onPress, ...props}) {
   return (
     <TouchableOpacity style={{flex: 1, marginHorizontal: 10}}>
       <BooCard
         w={150}
         h={150}
+        style={{borderWidth: 2, borderColor: colors.lightGrey}}
+        onPress={onPress}
         positionX="center"
-        positionY="flex-start"
-        backgroundColor={colors.lightGrey}>
+        positionY="flex-start">
         <Image
           style={{
             width: width * 150,
@@ -34,7 +35,7 @@ function BooCharacterCard({image, ...props}) {
         />
         <View
           style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
-          <BooText type="subtitle" textAlign="center" color={colors.black}>
+          <BooText type="content" textAlign="center" color={colors.black}>
             {props.children}
           </BooText>
         </View>

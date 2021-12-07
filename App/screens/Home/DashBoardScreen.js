@@ -22,7 +22,7 @@ import {
 import {BooCard} from '../../component/BooCard';
 import {BooText} from '../../component/BooText';
 import {BooCharacterCard} from './component/BooCharacterCard';
-import {HorizontalList} from './component/HorizontalList';
+import {HorizontalList} from '../../component/HorizontalList';
 
 import {
   useUsersState,
@@ -31,17 +31,19 @@ import {
 } from '../../userReducer';
 
 import axios from 'axios';
+import API from '../../utils/record';
 
 function DashBoardScreen({navigation, ...props}) {
   const state = useUsersState();
   const dispatch = useUsersDispatch();
-  // const subcharacter = state.subcharacter;
+  const [otherRecord, setOtherRecord] = useState([]);
   const userID = state.userID;
-  const subcharacterID = state.userID;
+  const subcharacter = state.subcharacter;
 
   useEffect(() => {
-    const getSubcharacter = () => {
-      fetchSubcharacter(dispatch, userID);
+    const getSubcharacter = async () => {
+      await fetchSubcharacter(dispatch, userID);
+      await API.getOtherPost(userID, setOtherRecord);
     };
     getSubcharacter();
   }, [dispatch, userID]);
@@ -52,107 +54,82 @@ function DashBoardScreen({navigation, ...props}) {
         flex: 1,
         backgroundColor: colors.white,
       }}>
-      <View style={styles.headerSection}>
-        <BooText type="title" color={colors.black}>
-          쿨럭
-        </BooText>
-
-        <BooCard
-          onPress={() => {
-            // axios
-            //   .post('http://localhost:8080/auth/setUser', {
-            //     user_id: '12345',
-            //     password: 'wlgus',
-            //     username: 'jihyoun',
-            //     birthday: '1998-06-02',
-            //     email: 'jihyoun0602@khu.ac.kr',
-            //   })
-            //   .then(function (response) {
-            //     console.log(response);
-            //   })
-            //   .catch(err => {
-            //     console.log(err);
-            //   });
-            // axios
-            //   .post(`http://localhost:8080/subCharacter/record/${userID}`, {
-            //     // subcharacter_id: 'abc2',
-            //     startDate: '2020-09-19',
-            //     title: 'sssss 2',
-            //     subtitle: 'ssss',
-            //     goal: 'sss',
-            //   })
-            //   .then(function (response) {
-            //     console.log(response);
-            //   })
-            //   .catch(err => {
-            //     console.log(err);
-            //   });
-            axios
-              .post(`http://localhost:8080/record/post/${userID}/B2Vhh2xBg1`, {
-                // subcharacter_id: 'abc2',
-                content: '포스트 12 테스트',
-                feeling: '만족스러워요',
-                secret: 1,
-              })
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(err => {
-                console.log(err);
-              });
-            // axios
-            //   .delete(
-            //     `http://localhost:8080/subCharacter/post/${userID}/${subcharacterID}`,
-            //   )
-            //   .then(function (response) {
-            //     console.log(response);
-            //   })
-            //   .catch(err => {
-            //     console.log(err);
-            //   });
-            // postid 추가
-            // axios
-            //   .delete(`http://localhost:8080/record/post/${userID}/5`)
-            //   .then(function (response) {
-            //     console.log(response);
-            //   })
-            //   .catch(err => {
-            //     console.log(err);
-            //   });
-            // axios
-            //   .post(`http://localhost:8080/record/likes/tester02/3`, {
-            //     likeState: true,
-            //   })
-            //   .then(function (response) {
-            //     console.log(response);
-            //   })
-            //   .catch(err => {
-            //     console.log(err);
-            //   });
-          }}
-          w={135}
-          h={167}
-          positionX="center"
-          positionY="center"
-          backgroundColor={colors.primary}>
-          <BooText type="subtitle" color={colors.white}>
-            나만의 부캐{`\n`}등록하기
+      <ScrollView>
+        <View style={styles.headerSection}>
+          <BooText
+            type="titleBold"
+            color={colors.primary}
+            textAlign="left"
+            style={{position: 'absolute', top: 20, left: 20}}>
+            BooFinder
           </BooText>
-        </BooCard>
-      </View>
 
-      <HorizontalList listTitle="내 부캐 관리하기" />
-      <HorizontalList listTitle="다른 부캐 구경하기" />
+          <Image
+            style={{
+              width: 150,
+              height: 150,
+              alignSelf: 'flex-end',
+              marginRight: 20,
+            }}
+            source={images.witchTemp}
+          />
+
+          <BooCard
+            onPress={() => {
+              navigation.push('BooEnrollScreen');
+            }}
+            w={350}
+            h={45}
+            positionX="center"
+            positionY="center"
+            style={{
+              alignSelf: 'center',
+              justifyContent: 'flex-end',
+            }}
+            backgroundColor={colors.primary}>
+            <BooText type="subtitle" color={colors.white}>
+              나만의 부캐 등록하기
+            </BooText>
+          </BooCard>
+        </View>
+
+        <HorizontalList listTitle="내 부캐 관리하기" horizontal={true}>
+          {subcharacter.map(data => {
+            return (
+              <BooCharacterCard
+                image={images.boy}
+                key={data.subcharacter_id}
+                onPress={() => navigation.push('RecordScreen')}>
+                {data.title}
+              </BooCharacterCard>
+            );
+          })}
+        </HorizontalList>
+
+        <HorizontalList listTitle="다른 유저 활동 보기" horizontal={true}>
+          {otherRecord.map(data => {
+            return (
+              <BooCharacterCard
+                image={images.boy}
+                key={data.post_id}
+                onPress={() => navigation.push('RecordScreen')}>
+                {data.content}
+              </BooCharacterCard>
+            );
+          })}
+        </HorizontalList>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   headerSection: {
-    flex: 0.4,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginTop: height * 20,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    height: 300,
+    paddingBottom: 20,
   },
 });
 

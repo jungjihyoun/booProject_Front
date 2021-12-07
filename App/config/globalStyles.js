@@ -31,14 +31,24 @@ export const fontWeight = {
   extraBold: '800',
 };
 
+export const fonts = {
+  spoqaRegular: 'SpoqaHanSansNeo-Regular',
+  spoqaBold: 'SpoqaHanSansNeo-Bold',
+  spoqaLight: 'SpoqaHanSansNeo-Light',
+};
+
 export const images = {
-  ji: require('../assets/ji.jpg'),
   hello: require('../assets/waving-hand.png'),
   puzzle: require('../assets/puzzle.png'),
   home: require('../assets/home.png'),
   profile: require('../assets/profile.png'),
   searchBoo: require('../assets/searchBoo.png'),
   write: require('../assets/write.png'),
+  unheart: require('../assets/unheart.png'),
+  heart: require('../assets/heart.png'),
+  secretCheck: require('../assets/secretCheck.png'),
+  boy: require('../assets/boy.png'),
+  witchTemp: require('../assets/witchTemp.png'),
 };
 
 export const height = (Dimensions.get('screen').height * (1 / 835)).toFixed(2);

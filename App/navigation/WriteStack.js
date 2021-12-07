@@ -1,6 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import WritingScreen from '../screens/Write/WritingScreen';
+
 const StackWrite = createStackNavigator();
 const navOptionHandler = () => ({
   headerShown: false,

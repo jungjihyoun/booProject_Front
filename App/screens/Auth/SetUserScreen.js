@@ -39,11 +39,19 @@ const SetUserScreen = ({navigation}) => {
   const [birth, setBirth] = useState(new Date());
 
   const setUserBirth = e => {
-    dispatch({
-      type: 'setEmail',
-      userEmail: birth,
-    });
+    const year = e.getFullYear();
+    const month = e.getMonth() + 1;
+    const date = e.getDate();
+    var formatBirth = `${year}-${month >= 10 ? month : '0' + month}-${
+      date >= 10 ? date : '0' + date
+    }`;
+    console.log(formatBirth);
+
     setBirth(e);
+    dispatch({
+      type: 'setBirth',
+      userBirth: formatBirth,
+    });
   };
   const saveText = (type, event) => {
     if (type === 'userName') {
@@ -68,7 +76,12 @@ const SetUserScreen = ({navigation}) => {
             saveText('userName', e);
           }}
           placeholder="이름"
-          keyboardType="numeric"
+          onEndEditing={() => {
+            dispatch({
+              type: 'setName',
+              userName: userName,
+            });
+          }}
         />
 
         <Text style={styles.contentText}>비밀번호를 설정해주세요[필수]</Text>
@@ -78,11 +91,17 @@ const SetUserScreen = ({navigation}) => {
             saveText('password', e);
           }}
           placeholder="대소문자,숫자 포함 6글자 이상"
-          keyboardType="numeric"
+          onEndEditing={() => {
+            dispatch({
+              type: 'setPassword',
+              userPassword: password,
+            });
+          }}
         />
 
         <Text style={styles.contentText}>생년월일을 입력해주세요[선택]</Text>
         <DatePicker
+          locale="ko"
           style={{height: 100}}
           date={birth}
           onDateChange={date => {
@@ -94,34 +113,19 @@ const SetUserScreen = ({navigation}) => {
 
       <TouchableOpacity
         style={styles.bottomSection}
-        onPress={async () => {
-          dispatch({
-            type: 'setName',
-            userName: userName,
-          });
-          dispatch({
-            type: 'setPassword',
-            userPassword: password,
-          });
-          dispatch({
-            type: 'setBirth',
-            userBirth: birth.toDateString(),
-          });
-          navigation.navigate('DashBoardScreen', {
-            // content: content,
-            // noteTitle: route.params.title,
-          });
-          await axios
-            .post('http://localhost:8080/setUser', {
-              user_id: '12345',
-              password: 'wlgus',
-              username: 'jihyoun',
-              birthday: '1998-06-02',
-              email: 'jihyoun0602@khu.ac.kr',
+        onPress={() => {
+          axios
+            .post('http://localhost:8080/auth/setUser', {
+              user_id: state.userID,
+              password: state.userPassword,
+              username: state.userName,
+              birthday: state.userBirth,
+              email: state.userEmail,
             })
             .then(function (response) {
               console.log(response);
             });
+          navigation.navigate('HomeApp');
         }}>
         <Text style={styles.bottomText}>홈화면으로</Text>
       </TouchableOpacity>

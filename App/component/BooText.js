@@ -1,6 +1,12 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
-import {fontSizes, fontWeight, height, width} from '../config/globalStyles';
+import {
+  fontSizes,
+  fontWeight,
+  height,
+  width,
+  fonts,
+} from '../config/globalStyles';
 
 function BooText({color, textAlign, style, type, ...props}) {
   return (
@@ -8,6 +14,7 @@ function BooText({color, textAlign, style, type, ...props}) {
       style={{
         ...styles[type],
         ...style,
+
         color: color,
         textAlign: textAlign,
       }}>
@@ -19,26 +26,32 @@ function BooText({color, textAlign, style, type, ...props}) {
 const styles = StyleSheet.create({
   header: {
     fontSize: fontSizes.xl,
+    fontFamily: fonts.spoqaRegular,
   },
   title: {
     fontSize: fontSizes.lg,
+    fontFamily: fonts.spoqaRegular,
   },
   titleBold: {
     fontSize: fontSizes.lg,
-    fontWeight: fontWeight.bold,
+    fontFamily: fonts.spoqaBold,
   },
 
   subtitle: {
     fontSize: fontSizes.md,
-    fontWeight: fontWeight.regular,
+    fontFamily: fonts.spoqaRegular,
   },
   subtitleBold: {
     fontSize: fontSizes.lg,
-    fontWeight: fontWeight.bold,
+    fontFamily: fonts.spoqaBold,
   },
-
   content: {
     fontSize: fontSizes.sm,
+    fontFamily: fonts.spoqaRegular,
+  },
+  contentXS: {
+    fontSize: fontSizes.xs,
+    fontFamily: fonts.spoqaRegular,
   },
 });
 
