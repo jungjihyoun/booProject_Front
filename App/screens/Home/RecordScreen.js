@@ -19,18 +19,7 @@ import {
   height,
 } from '../../config/globalStyles';
 
-import {BooCard} from '../../component/BooCard';
-import {BooText} from '../../component/BooText';
-import {BooCharacterCard} from './component/BooCharacterCard';
-import {HorizontalList} from './component/HorizontalList';
-
-import {
-  useUsersState,
-  useUsersDispatch,
-  fetchSubcharacter,
-} from '../../userReducer';
-
-import axios from 'axios';
+import {useUsersState, useUsersDispatch} from '../../userReducer';
 
 function RecordScreen({navigation, ...props}) {
   const state = useUsersState();

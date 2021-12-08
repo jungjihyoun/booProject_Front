@@ -59,23 +59,22 @@ function LoginScreen({navigation}) {
         <TouchableOpacity
           style={styles.loginButton}
           onPress={async () => {
-            // await dispatch({
-            //   type: 'setEmail',
-            //   userEmail: email,
-            // });
+            await dispatch({
+              type: 'setEmail',
+              userEmail: email,
+            });
 
-            // await dispatch({
-            //   type: 'setPassword',
-            //   userEmail: password,
-            // });
+            await dispatch({
+              type: 'setPassword',
+              userEmail: password,
+            });
 
-            // await API.login(
-            //   email,
-            //   password,
-            //   navigation.navigate('HomeApp'),
-            //   dispatch,
-            // );
-            navigation.navigate('HomeApp');
+            await API.login(
+              email,
+              password,
+              navigation.navigate('HomeApp'),
+              dispatch,
+            );
           }}>
           <Text style={{color: colors.white}}>로그인</Text>
         </TouchableOpacity>

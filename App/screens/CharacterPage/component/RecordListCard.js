@@ -1,14 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import {Image, View, Text, TouchableOpacity, Dimensions} from 'react-native';
 
 import {
   height,
@@ -20,12 +12,9 @@ import {
   fonts,
 } from '../../../config/globalStyles';
 
-import {useUsersState, useUsersDispatch} from '../../../userReducer';
-import {BooCard} from '../../../component/BooCard';
+import {useUsersState} from '../../../userReducer';
 import {BooText} from '../../../component/BooText';
 import API from '../../../utils/subCharacter';
-import {start} from 'repl';
-import subCharacter from '../../../utils/subCharacter';
 function RecordListCard({
   onPress,
   startDate,
@@ -60,17 +49,18 @@ function RecordListCard({
           width: Dimensions.get('window').width,
           overflow: 'hidden',
           marginBottom: 40,
-          borderBottomColor: colors.mediumGrey,
-          borderBottomWidth: 1,
         }}>
         {img_path === null ? (
           <></>
         ) : (
-          // <Image
-          //   style={{width: 250, height: 250, alignSelf: 'center'}}
-          //   source={{uri: img_path}}
-          // />
-          <></>
+          <Image
+            style={{
+              width: Dimensions.get('window').width,
+              height: 300,
+              alignSelf: 'center',
+            }}
+            source={{uri: img_path}}
+          />
         )}
 
         <View
@@ -101,8 +91,8 @@ function RecordListCard({
                 }}>
                 <Image
                   style={{
-                    width: 30,
-                    height: 30,
+                    width: 25,
+                    height: 25,
                     marginRight: 5,
                     tintColor: colors.primary,
                   }}
@@ -117,8 +107,8 @@ function RecordListCard({
                 }}>
                 <Image
                   style={{
-                    width: 30,
-                    height: 30,
+                    width: 25,
+                    height: 25,
                     marginRight: 5,
                     tintColor: colors.primary,
                   }}
@@ -158,7 +148,7 @@ function RecordListCard({
             type="title"
             style={{
               width: '100%',
-              fontFamily: fonts.spoqaRegular,
+              fontFamily: fonts.spoqaBold,
               marginBottom: 7,
             }}>
             {title}
@@ -173,30 +163,37 @@ function RecordListCard({
             }}>
             {subtitle}
           </BooText>
-          <BooText
-            type="content"
-            style={{
-              width: '100%',
-              fontFamily: fonts.spoqaLight,
-              lineHeight: 23,
-            }}>
-            {goal}
-          </BooText>
-        </View>
 
-        {/* {!more && (
-          <TouchableOpacity
+          <View
             style={{
-              position: 'absolute',
-              bottom: 5,
-              right: 20,
-            }}
-            onPress={() => {
-              setMore(true);
+              flexDirection: 'row',
+
+              width: 300,
+              marginTop: 10,
+              alignContent: 'center',
+              alignItems: 'center',
             }}>
-            <Text style={{fontFamily: fonts.spoqaLight}}>더보기</Text>
-          </TouchableOpacity>
-        )} */}
+            <BooText
+              type="content"
+              color={colors.primary}
+              style={{
+                marginRight: 10,
+                fontFamily: fonts.spoqaBold,
+                color: colors.primary,
+              }}>
+              목표
+            </BooText>
+            <BooText
+              type="content"
+              style={{
+                width: '100%',
+                fontFamily: fonts.spoqaLight,
+                lineHeight: 23,
+              }}>
+              {goal}
+            </BooText>
+          </View>
+        </View>
       </View>
     </View>
   );

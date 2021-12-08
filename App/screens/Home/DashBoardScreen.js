@@ -97,7 +97,7 @@ function DashBoardScreen({navigation, ...props}) {
           {subcharacter.map(data => {
             return (
               <BooCharacterCard
-                image={images.boy}
+                img_path={data.img_path}
                 key={data.subcharacter_id}
                 onPress={() => navigation.push('RecordScreen')}>
                 {data.title}

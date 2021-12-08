@@ -1,5 +1,5 @@
 import API from './API';
-
+import axios from 'axios';
 // 부캐 불러오기
 const getSubcharacter = async (user_id, likeState) => {
   return await API.get(`/subCharacter/${user_id}`)
@@ -24,10 +24,11 @@ const getOtherSubcharacter = async (user_id, setOtherBoo) => {
 };
 
 // 좋아요 여부
-const getLike = async (user_id, likePostList) => {
+const getLike = async (user_id, setLikePostList) => {
   return await API.get(`/subCharacter/likes/${user_id}`)
     .then(function (response) {
-      likePostList(response.data);
+      setLikePostList(response.data);
+      console.log('a', response);
     })
     .catch(function (error) {
       console.log(error);
@@ -46,15 +47,38 @@ const postLike = async (user_id, subcharacter_id, likeState) => {
     });
 };
 
-const postSubCharacter = async (user_id, title, subtitle, goal, startDate) => {
-  return await API.post(`/subCharacter/record/${user_id}`, {
-    title: title,
-    subtitle: subtitle,
-    goal: goal,
-    startDate: startDate,
-  })
+const postSubCharacter = async (
+  user_id,
+  title,
+  subtitle,
+  goal,
+  startDate,
+  image,
+  secret,
+  navigate,
+) => {
+  var data = new FormData();
+  data.append('title', title);
+  data.append('goal', goal);
+  data.append('subtitle', subtitle);
+  data.append('startDate', startDate);
+  data.append('secret', secret);
+  if (image !== '') {
+    data.append('file', image);
+  }
+
+  var config = {
+    method: 'post',
+    url: `http://localhost:8080/subCharacter/record/${user_id}`,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: data,
+  };
+  return axios(config)
     .then(function (response) {
-      console.log('부캐릭터 저장 완료', response.data);
+      console.log(JSON.stringify(response.data));
+      navigate();
     })
     .catch(function (error) {
       console.log(error);
@@ -71,6 +95,13 @@ const deleteSubCharacter = async (user_id, subcharacter_id) => {
     });
 };
 
+const postImage = async (user_id, image) =>
+  await axios.post(`http://localhost:8080/image/upload/${user_id}`, image, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
 export default {
   getSubcharacter,
   getOtherSubcharacter,
@@ -78,4 +109,5 @@ export default {
   deleteSubCharacter,
   getLike,
   postLike,
+  postImage,
 };

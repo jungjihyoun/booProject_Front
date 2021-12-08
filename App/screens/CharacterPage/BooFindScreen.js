@@ -82,17 +82,17 @@ function BooFindScreen({navigation, route, ...props}) {
         <Text
           style={{
             fontFamily: fonts.spoqaBold,
-            fontSize: fontSizes.lg,
+            fontSize: fontSizes.md,
             marginLeft: 20,
           }}>
-          부캐둘러보기
+          부캐 피드
         </Text>
       </View>
       <View style={{flex: 1}}>
         <FlatList
           data={otherBoo}
           renderItem={renderItem}
-          keyExtractor={item => item.post_id}
+          keyExtractor={item => item.subcharacter_id}
         />
       </View>
     </SafeAreaView>

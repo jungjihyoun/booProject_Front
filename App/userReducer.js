@@ -12,7 +12,7 @@ const initialState = {
   todayDate: new Date().toDateString(),
   userName: '',
   userEmail: '',
-  userID: 'da51ef',
+  userID: '',
   userBirth: new Date(),
   userPassword: '',
   subcharacter: [], //subcharacter 정보 담는 변수

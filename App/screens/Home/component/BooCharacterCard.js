@@ -9,12 +9,12 @@ import {
   Image,
 } from 'react-native';
 
-import {height, width, colors} from '../../../config/globalStyles';
+import {height, width, colors, images} from '../../../config/globalStyles';
 
 import {BooCard} from '../../../component/BooCard';
 import {BooText} from '../../../component/BooText';
 
-function BooCharacterCard({image, onPress, ...props}) {
+function BooCharacterCard({img_path, onPress, ...props}) {
   return (
     <TouchableOpacity style={{flex: 1, marginHorizontal: 10}}>
       <BooCard
@@ -24,15 +24,28 @@ function BooCharacterCard({image, onPress, ...props}) {
         onPress={onPress}
         positionX="center"
         positionY="flex-start">
-        <Image
-          style={{
-            width: width * 150,
-            height: height * 100,
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-          }}
-          source={image}
-        />
+        {img_path ? (
+          <Image
+            style={{
+              width: width * 150,
+              height: height * 100,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+            }}
+            source={{uri: img_path}}
+          />
+        ) : (
+          <Image
+            style={{
+              width: width * 150,
+              height: height * 100,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+            }}
+            source={images.boy}
+          />
+        )}
+
         <View
           style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
           <BooText type="content" textAlign="center" color={colors.black}>

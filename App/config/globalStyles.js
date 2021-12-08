@@ -49,6 +49,7 @@ export const images = {
   secretCheck: require('../assets/secretCheck.png'),
   boy: require('../assets/boy.png'),
   witchTemp: require('../assets/witchTemp.png'),
+  camera: require('../assets/camera.png'),
 };
 
 export const height = (Dimensions.get('screen').height * (1 / 835)).toFixed(2);
